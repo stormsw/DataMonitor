@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -42,15 +43,22 @@ namespace DemoClientDataProvider
         public static void generateBuzzzz()
         {
             var packets = 10;
+            List<Thread> container = new List<Thread>();
             while (--packets>0)
             {
-                //Thread t = new Thread(x =>
+                Thread t = new Thread(x =>
                     {
                         StartClient();
                     }                
-                //);
+                );
 
-                //t.Start();
+                t.Start();
+                container.Add(t);
+            }
+
+            foreach (var item in container)
+            {
+                item.Join(100);
             }
         }
 
